@@ -42,7 +42,7 @@ export default function App() {
 
     if (filterCompleted === "true") {
     computedTodos = [...computedTodos].sort((a, b) =>
-    a.title > b.title ? -1 : 1,
+  a.title > b.title ? -1 : 1,
 );
   }
 
