@@ -41,17 +41,15 @@ export default function App() {
     }
 
     if (filterCompleted === "true") {
-      computedTodos = computedTodos.filter(
-          todo =>
-          filterCompleted === "true" && todo.completed === true
-      )
+      computedTodos = [...computedTodos].sort((a, b) =>
+    a.name > b.name ? 1 : -1,
+  );
   }
 
   if (filterCompleted === "false") {
-    computedTodos = computedTodos.filter(
-        todo =>
-        filterCompleted === "false" && todo.completed === false
-    )
+    computedTodos = [...computedTodos].sort((a, b) =>
+    a.name > b.name ? -1 : 1,
+  );
   }
 
     setTotalTodos(computedTodos.length);
@@ -102,9 +100,9 @@ export default function App() {
             setCurrentPage(1);
           }}
         >
-          <option defaultValue=""></option>
-          <option value="true">true</option>
-          <option value="false">false</option>
+          <option defaultValue="">None</option>
+          <option value="false">A-Z</option>
+          <option value="true">Z-A</option>
         </select>
       </div>
       <div className="mb-3">
@@ -142,7 +140,7 @@ export default function App() {
                 <div className="card-text">
                   <div className="card-body-flex">
                     <span>{`Brand: ${todo.title}`}</span>
-                    <span>{`Abrv: ${todo.title}`}</span>
+                    <div>{`Abrv: ${todo.abrv}`}</div>
                     <span>{`Completed: ${todo.completed}`}</span>
                   </div>
                 </div>
