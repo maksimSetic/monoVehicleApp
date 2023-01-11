@@ -41,15 +41,16 @@ export default function App() {
     }
 
     if (filterCompleted === "true") {
-      computedTodos = [...computedTodos].sort((a, b) =>
-    a.name > b.name ? 1 : -1,
-  );
+    computedTodos = [...computedTodos].sort((a, b) =>
+    a.title > b.title ? -1 : 1,
+);
   }
 
   if (filterCompleted === "false") {
     computedTodos = [...computedTodos].sort((a, b) =>
-    a.name > b.name ? -1 : 1,
+    a.title > b.title ? 1 : -1,
   );
+ 
   }
 
     setTotalTodos(computedTodos.length);
@@ -141,7 +142,6 @@ export default function App() {
                   <div className="card-body-flex">
                     <span>{`Brand: ${todo.title}`}</span>
                     <div>{`Abrv: ${todo.abrv}`}</div>
-                    <span>{`Completed: ${todo.completed}`}</span>
                   </div>
                 </div>
               </div>
