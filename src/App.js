@@ -73,10 +73,10 @@ export default function App() {
 
   return (
     <div className="container">
-      <h3>Mono Software Vehicle App</h3>
+      <h3 style={{textAlign:"center", marginTop: "20px"}}>Mono Soft Vehicle App</h3>
       <div className="mb-3">
         <label htmlFor="search" className="form-label">
-          Search
+          Pretraži
         </label>
         <input
           type="text"
@@ -92,7 +92,7 @@ export default function App() {
       </div>
       <div className="mb-3">
         <label htmlFor="search" className="form-label">
-          Completed
+          Sortiraj 
         </label>
         <select
           className="form-select"
@@ -113,7 +113,7 @@ export default function App() {
           className="btn btn-danger btn-sm"
           onClick={resetFilter}
         >
-          Reset Filters
+          Resetiraj Filtere
         </button>
       </div>
 
@@ -141,7 +141,8 @@ export default function App() {
               <div className="card-body">
                 <div className="card-text">
                   <div className="card-body-flex">
-                    <span>{`Title: ${todo.title}`}</span>
+                    <span>{`Brand: ${todo.title}`}</span>
+                    <span>{`Abrv: ${todo.title}`}</span>
                     <span>{`Completed: ${todo.completed}`}</span>
                   </div>
                 </div>
