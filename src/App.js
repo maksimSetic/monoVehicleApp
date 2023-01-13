@@ -10,6 +10,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalTodos, setTotalTodos] = useState(0);
   const todosPerPage = 10;
+ 
 
   useEffect(() => {
     axios
@@ -22,45 +23,49 @@ export default function App() {
       });
   }, []);
 
-  
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalTodos / todosPerPage); i++) {
     pageNumbers.push(i);
   }
 
-
   const todosData = useMemo(() => {
     let computedTodos = todos;
 
     if (searchTerm) {
-        computedTodos = computedTodos.filter(
-            todo =>
-            todo.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+      computedTodos = computedTodos.filter((todo) =>
+        todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     }
 
     if (filterCompleted === "true") {
-    computedTodos = [...computedTodos].sort((a, b) =>
-  a.title > b.title ? -1 : 1,
-);
-  }
+      computedTodos = [...computedTodos].sort((a, b) =>
+        a.title > b.title ? -1 : 1
+      );
+    }
 
-  if (filterCompleted === "false") {
-    computedTodos = [...computedTodos].sort((a, b) =>
-    a.title > b.title ? 1 : -1,
-  );
- 
-  }
+    if (filterCompleted === "false") {
+      computedTodos = [...computedTodos].sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
+    }
+
+    if (filterCompleted === "asc") {
+      computedTodos = [...computedTodos].sort((a, b) => a.id - b.id); 
+    }
+
+    if (filterCompleted === "desc") {
+      computedTodos = [...computedTodos].sort((a, b) => b.id - a.id);
+      
+    }
 
     setTotalTodos(computedTodos.length);
 
- 
     return computedTodos.slice(
-        (currentPage - 1) * todosPerPage,
-        (currentPage - 1) * todosPerPage + todosPerPage
+      (currentPage - 1) * todosPerPage,
+      (currentPage - 1) * todosPerPage + todosPerPage
     );
-}, [todos, currentPage, searchTerm, filterCompleted]);
+  }, [todos, currentPage, searchTerm, filterCompleted]);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -72,7 +77,9 @@ export default function App() {
 
   return (
     <div className="container">
-      <h3 style={{textAlign:"center", marginTop: "20px"}}>Mono Soft Vehicle App</h3>
+      <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+        Mono Soft Vehicle Application
+      </h3>
       <div className="mb-3">
         <label htmlFor="search" className="form-label">
           Pretraži
@@ -91,7 +98,7 @@ export default function App() {
       </div>
       <div className="mb-3">
         <label htmlFor="search" className="form-label">
-          Sortiraj 
+          Sortiraj
         </label>
         <select
           className="form-select"
@@ -104,6 +111,8 @@ export default function App() {
           <option defaultValue="">None</option>
           <option value="false">A-Z</option>
           <option value="true">Z-A</option>
+          <option value="asc">1-200</option>
+          <option value="desc">200-1</option>
         </select>
       </div>
       <div className="mb-3">
@@ -112,7 +121,7 @@ export default function App() {
           className="btn btn-danger btn-sm"
           onClick={resetFilter}
         >
-          Resetiraj Filtere
+          Resetiraj filtere
         </button>
       </div>
 
@@ -128,26 +137,25 @@ export default function App() {
         </ul>
       </nav>
 
-      {todosData
-        .map((todo) => {
-          return (
-            <div key={todo.id} className="card margin-bottom">
-              <h5 className="card-header">
-                <div className="card-header-flex">
-                  <span className="id">{`#${todo.id}`}</span>
-                </div>
-              </h5>
-              <div className="card-body">
-                <div className="card-text">
-                  <div className="card-body-flex">
-                    <span>{`Brand: ${todo.title}`}</span>
-                    <div>{`Abrv: ${todo.abrv}`}</div>
-                  </div>
+      {todosData.map((todo) => {
+        return (
+          <div key={todo.id} className="card margin-bottom">
+            <h5 className="card-header">
+              <div className="card-header-flex">
+                <span className="id">{`#${todo.id}`}</span>
+              </div>
+            </h5>
+            <div className="card-body">
+              <div className="card-text">
+                <div className="card-body-flex">
+                  <span>{`Brand: ${todo.title}`}</span>
+                  <span>{`Abrv: ${todo.abrv}`}</span>
                 </div>
               </div>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
     </div>
   );
 }
